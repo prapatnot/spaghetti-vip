@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spaghetti Factory VIP Register</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    body { font-family: 'Kanit', sans-serif; background-color: #FDFBF7; }
+    .brand-color { color: #005C5C; }
+    .bg-brand { background-color: #005C5C; }
+    .btn-hover:hover { background-color: #004545; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 40px -10px rgba(0, 92, 92, 0.15);
+      border-radius: 24px;
+      border: 1px solid rgba(0, 92, 92, 0.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <div class="glass-card w-full max-w-md overflow-hidden relative">
+    <div class="pt-8 pb-6 px-8 text-center bg-white relative z-10">
+      
+      <img src="logo.png" alt="Spaghetti Factory" class="h-24 mx-auto mb-4 object-contain">
+      
+      <h2 class="text-2xl font-bold brand-color">VIP Registration</h2>
+      <p class="text-gray-400 text-sm mt-1">ลงทะเบียนเพื่อรับสิทธิพิเศษ</p>
+    </div>
+
+    <div class="px-8 pb-10 bg-white">
+      <form id="regForm" onsubmit="submitForm(event)" class="space-y-4">
+        
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Full Name</label>
+          <input type="text" name="fullName" required class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+        </div>
+
+        <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Line ID</label>
+            <input type="text" name="lineId" required class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Email</label>
+          <input type="email" name="email" required class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Address</label>
+          <textarea name="address" required rows="3" class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none resize-none"></textarea>
+        </div>
+
+        <div class="pt-4">
+          <button type="submit" id="submitBtn" class="w-full bg-brand btn-hover text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2">
+            <span>ยืนยันการลงทะเบียน</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="bg-gray-50 py-3 text-center border-t border-gray-100">
+      <p class="text-xs text-gray-400">© Spaghetti Factory VIP Club</p>
+    </div>
+  </div>
+
+  <script>
+    // *** ใส่ URL ของคุณที่ได้จากการ Deploy ใหม่ที่นี่ ***
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSwvpS-GSfn4rZKt9sOU6obRWlP2OqwC86D0pF7CU8Ydr_1c861pmPu1P4ZLp7DzFO/exec';
+
+    function submitForm(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const form = document.getElementById('regForm');
+      
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'กำลังบันทึก...';
+      btn.disabled = true;
+
+      const formData = {
+        fullName: form.fullName.value,
+        lineId: form.lineId.value,
+        email: form.email.value,
+        address: form.address.value
+      };
+
+      // ใช้ fetch แทน google.script.run
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // สำคัญมาก: Google Script บังคับใช้โหมดนี้
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        // เนื่องจาก no-cors เราจะเช็ค response จริงๆ ไม่ได้ แต่ถ้าไม่มี error ถือว่าผ่าน
+        Swal.fire({
+          icon: 'success',
+          title: 'เรียบร้อย!',
+          text: 'บันทึกข้อมูลสำเร็จ',
+          confirmButtonColor: '#005C5C'
+        }).then(() => {
+          form.reset();
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด',
+          text: 'ไม่สามารถติดต่อ Server ได้'
+        });
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>
