@@ -14,67 +14,56 @@
     .brand-color { color: #005C5C; }
     .bg-brand { background-color: #005C5C; }
     
-    /* Custom Checkbox Design */
-    .checkbox-wrapper input:checked + div {
-      background-color: #005C5C;
-      border-color: #005C5C;
-    }
-    .checkbox-wrapper input:checked + div svg {
-      display: block;
-    }
-    
-    /* Button States */
-    .btn-disabled {
-      background-color: #CBD5E1; /* สีเทา */
-      cursor: not-allowed;
-      transform: none !important;
-    }
-    .btn-active {
-      background-color: #005C5C;
-      cursor: pointer;
-    }
+    /* Checkbox & Button Styles */
+    .checkbox-wrapper input:checked + div { background-color: #005C5C; border-color: #005C5C; }
+    .checkbox-wrapper input:checked + div svg { display: block; }
+    .btn-disabled { background-color: #CBD5E1; cursor: not-allowed; transform: none !important; }
+    .btn-active { background-color: #005C5C; cursor: pointer; }
     .btn-active:hover { background-color: #004545; }
-
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 10px 40px -10px rgba(0, 92, 92, 0.15);
-      border-radius: 24px;
-      border: 1px solid rgba(0, 92, 92, 0.1);
-    }
+    .glass-card { background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 40px -10px rgba(0, 92, 92, 0.15); border-radius: 24px; border: 1px solid rgba(0, 92, 92, 0.1); }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
   <div class="glass-card w-full max-w-md overflow-hidden relative">
     <div class="pt-8 pb-6 px-8 text-center bg-white relative z-10">
-      
       <img src="logo.png" alt="Spaghetti Factory" class="h-24 mx-auto mb-4 object-contain">
-      
       <h2 class="text-2xl font-bold brand-color">VIP Registration</h2>
-      <p class="text-gray-400 text-sm mt-1">ลงทะเบียนเพื่อรับสิทธิพิเศษสำหรับ VIP</p>
+      <p class="text-gray-400 text-sm mt-1">ลงทะเบียนวันนี้ รับสิทธิพิเศษมากมาย</p>
     </div>
 
     <div class="px-8 pb-10 bg-white">
       <form id="regForm" onsubmit="submitForm(event)" class="space-y-4">
         
         <div>
-          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Full Name</label>
-          <input type="text" name="fullName" required class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Full Name *</label>
+          <input type="text" name="fullName" required placeholder="ชื่อ-นามสกุล"
+                 class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
         </div>
 
         <div>
-            <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Line ID</label>
-            <input type="text" name="lineId" required class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+            <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Phone Number *</label>
+            <input type="tel" name="phone" required maxlength="10" placeholder="08xxxxxxxx" inputmode="numeric"
+                   class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+            <p class="text-xs text-gray-400 mt-1 ml-1">*กรอกเฉพาะตัวเลข 10 หลัก</p>
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Email</label>
-          <input type="email" name="email" required class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+            <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Line ID <span class="text-gray-400 font-normal normal-case">(ไม่บังคับ)</span></label>
+            <input type="text" name="lineId" placeholder="เช่น @myspaghetti"
+                   class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Address</label>
-          <textarea name="address" required rows="3" class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none resize-none"></textarea>
+          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Email *</label>
+          <input type="email" name="email" required placeholder="name@email.com" inputmode="email"
+                 class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none">
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold text-gray-500 uppercase ml-1">Address *</label>
+          <textarea name="address" required rows="3" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด, รหัสไปรษณีย์"
+                    class="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#005C5C] outline-none resize-none"></textarea>
         </div>
 
         <div class="pt-2">
@@ -84,7 +73,7 @@
                 <svg class="w-3 h-3 text-white hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="text-sm text-gray-500 select-none">
-                ข้าพเจ้ายอมรับ <a href="#" onclick="showPDPA(event)" class="text-[#005C5C] font-semibold underline hover:text-[#004545]">ข้อตกลงและนโยบายความเป็นส่วนตัว (PDPA)</a> ในการเก็บรวบรวมข้อมูลเพื่อใช้ในการให้บริการ
+                ข้าพเจ้ายอมรับ <a href="#" onclick="showPDPA(event)" class="text-[#005C5C] font-semibold underline hover:text-[#004545]">นโยบายความเป็นส่วนตัว (PDPA)</a>
               </div>
             </label>
         </div>
@@ -104,70 +93,71 @@
   </div>
 
   <script>
-    // *** อย่าลืมใส่ URL ของคุณที่นี่ ***
+    // *** URL เดิมของคุณ (ถ้า Deploy แบบ New Version ไม่ต้องเปลี่ยน URL) ***
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwkwc-eu5UKXwKkm7TslEv0U11IKAyNK_pktxTw8dbA3aeJfdW6M6FWvq5J5ej9xUy/exec';
 
-    // ฟังก์ชันเปิด/ปิด ปุ่ม Submit
     function toggleSubmitButton() {
         const checkbox = document.getElementById('pdpaCheck');
         const btn = document.getElementById('submitBtn');
-        
         if (checkbox.checked) {
-            // ถ้าติ๊กถูก -> เปิดปุ่ม
             btn.disabled = false;
             btn.classList.remove('btn-disabled');
-            btn.classList.add('btn-active');
-            btn.classList.add('transform', 'active:scale-95'); // เพิ่ม Effect กดเด้งๆ
+            btn.classList.add('btn-active', 'transform', 'active:scale-95');
         } else {
-            // ถ้าเอาออก -> ปิดปุ่ม
             btn.disabled = true;
             btn.classList.add('btn-disabled');
-            btn.classList.remove('btn-active');
-            btn.classList.remove('transform', 'active:scale-95');
+            btn.classList.remove('btn-active', 'transform', 'active:scale-95');
         }
     }
 
-    // ฟังก์ชันแสดง Popup PDPA (SweetAlert2)
+    // (ใส่ฟังก์ชัน showPDPA ของเดิมไว้ตรงนี้ได้เลยครับ)
     function showPDPA(e) {
-        e.preventDefault(); // กันไม่ให้ลิงก์ดีดไปหน้าอื่น
-        Swal.fire({
-            title: '<span style="color:#005C5C">นโยบายความเป็นส่วนตัว</span>',
-            html: `
-                <div style="text-align: left; font-size: 0.9em; line-height: 1.6; color: #555;">
-                    <p><b>1. การเก็บรวบรวมข้อมูล:</b> ทางร้าน Spaghetti Factory จะเก็บรวบรวมข้อมูล ชื่อ, เบอร์โทร, และที่อยู่ เพื่อใช้ในการสมัครสมาชิกและจัดส่งสินค้าเท่านั้น</p>
-                    <br>
-                    <p><b>2. การเปิดเผยข้อมูล:</b> เราจะไม่เปิดเผยข้อมูลของท่านแก่บุคคลภายนอก ยกเว้นบริษัทขนส่งที่เกี่ยวข้อง</p>
-                    <br>
-                    <p><b>3. สิทธิ์ของเจ้าของข้อมูล:</b> ท่านสามารถขอยกเลิกหรือลบข้อมูลได้ตลอดเวลาโดยติดต่อผ่าน Line Official</p>
-                </div>
-            `,
-            confirmButtonText: 'รับทราบและยอมรับ',
-            confirmButtonColor: '#005C5C',
-            width: '600px',
-            scrollbarPadding: false
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // ถ้ากดรับทราบใน Popup จะติ๊กถูกให้อัตโนมัติ (UX เสริม)
-                const checkbox = document.getElementById('pdpaCheck');
-                checkbox.checked = true;
-                toggleSubmitButton();
-            }
-        });
+         e.preventDefault(); 
+         // ... (ใช้ code PDPA เดิม) ...
+         Swal.fire({
+             title: 'PDPA Consent',
+             text: '...(ข้อความ PDPA)...',
+             confirmButtonColor: '#005C5C'
+         }).then((res) => {
+             if(res.isConfirmed) {
+                 document.getElementById('pdpaCheck').checked = true;
+                 toggleSubmitButton();
+             }
+         });
     }
 
     function submitForm(e) {
       e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const form = document.getElementById('regForm');
       
+      const form = document.getElementById('regForm');
+      const phoneVal = form.phone.value.trim();
+
+      // --- Validation 1: ตรวจสอบเบอร์โทรศัพท์ ---
+      // ต้องเป็นตัวเลขล้วน (\d) และมีความยาว 10 ตัวเป๊ะ ({10})
+      const phoneRegex = /^\d{10}$/;
+      
+      if (!phoneRegex.test(phoneVal)) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'เบอร์โทรศัพท์ไม่ถูกต้อง',
+          text: 'กรุณากรอกเบอร์มือถือ 10 หลัก (ไม่ต้องใส่ขีด)',
+          confirmButtonColor: '#005C5C'
+        });
+        return; // หยุดทำงาน ไม่ส่งข้อมูล
+      }
+
+      // --- Validation 2: Line ID (ถ้าไม่ได้กรอก ก็ผ่านได้เลย เพราะไม่ required) ---
+
+      const btn = document.getElementById('submitBtn');
       const originalText = btn.innerHTML;
-      btn.innerHTML = 'กำลังบันทึก...';
+      btn.innerHTML = '<span class="animate-spin">⌛</span> กำลังบันทึก...';
       btn.disabled = true;
-      btn.classList.add('opacity-70'); // ลดความเข้มลงนิดหน่อยตอนโหลด
+      btn.classList.add('opacity-70');
 
       const formData = {
         fullName: form.fullName.value,
-        lineId: form.lineId.value,
+        phone: phoneVal,            // เพิ่ม phone
+        lineId: form.lineId.value,  // lineId อาจจะเป็นค่าว่าง "" ก็ได้
         email: form.email.value,
         address: form.address.value
       };
@@ -175,9 +165,7 @@
       fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8' // แก้ไขตามคำแนะนำเพื่อให้ส่งผ่าน
-        },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(formData)
       })
       .then(() => {
@@ -188,7 +176,6 @@
           confirmButtonColor: '#005C5C'
         }).then(() => {
           form.reset();
-          // Reset ปุ่มกลับไปเป็นสถานะ Disabled หลังส่งเสร็จ
           btn.innerHTML = originalText;
           btn.classList.remove('opacity-70');
           toggleSubmitButton(); 
@@ -196,13 +183,9 @@
       })
       .catch(error => {
         console.error('Error:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'เกิดข้อผิดพลาด',
-          text: 'ไม่สามารถติดต่อ Server ได้'
-        });
+        Swal.fire({ icon: 'error', title: 'Error', text: 'เกิดข้อผิดพลาดในการเชื่อมต่อ' });
         btn.innerHTML = originalText;
-        toggleSubmitButton(); // เช็คสถานะปุ่มใหม่
+        toggleSubmitButton();
       });
     }
   </script>
