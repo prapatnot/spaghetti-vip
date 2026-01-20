@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta property="og:title" content="สมัครสมาชิก VIP - Spaghetti Factory">
+  <meta property="og:description" content="ลงทะเบียนวันนี้ รับสิทธิพิเศษและส่วนลดมากมายเฉพาะสมาชิก VIP เท่านั้น!">
+  <meta property="og:image" content="logo.png">
+  
   <title>Spaghetti Factory VIP Register</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -69,11 +74,11 @@
         <div class="pt-2">
             <label class="checkbox-wrapper flex items-start cursor-pointer group">
               <input type="checkbox" id="pdpaCheck" class="hidden" onchange="toggleSubmitButton()">
-              <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center mt-0.5 mr-3 transition-colors duration-200 bg-white group-hover:border-[#005C5C]">
+              <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center mt-0.5 mr-3 transition-colors duration-200 bg-white group-hover:border-[#005C5C] flex-shrink-0">
                 <svg class="w-3 h-3 text-white hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
-              <div class="text-sm text-gray-500 select-none">
-                ข้าพเจ้ายอมรับ <a href="#" onclick="showPDPA(event)" class="text-[#005C5C] font-semibold underline hover:text-[#004545]">นโยบายความเป็นส่วนตัว (PDPA)</a>
+              <div class="text-sm text-gray-500 select-none leading-tight pt-0.5">
+                ข้าพเจ้าได้อ่านและยอมรับ <a href="#" onclick="showPDPA(event)" class="text-[#005C5C] font-semibold underline hover:text-[#004545]">นโยบายความเป็นส่วนตัวและข้อตกลง</a>
               </div>
             </label>
         </div>
@@ -88,12 +93,12 @@
     </div>
     
     <div class="bg-gray-50 py-3 text-center border-t border-gray-100">
-      <p class="text-xs text-gray-400">© Spaghetti Factory VIP Club</p>
+      <p class="text-xs text-gray-400">© Spaghetti Factory VIP MEMBER</p>
     </div>
   </div>
 
   <script>
-    // *** URL เดิมของคุณ (ถ้า Deploy แบบ New Version ไม่ต้องเปลี่ยน URL) ***
+    // *** URL Google Script เดิมของคุณ ***
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwkwc-eu5UKXwKkm7TslEv0U11IKAyNK_pktxTw8dbA3aeJfdW6M6FWvq5J5ej9xUy/exec';
 
     function toggleSubmitButton() {
@@ -110,20 +115,48 @@
         }
     }
 
-    // (ใส่ฟังก์ชัน showPDPA ของเดิมไว้ตรงนี้ได้เลยครับ)
+    // --- ฟังก์ชันแสดง Popup ข้อตกลง (อัปเดตตามข้อความใหม่) ---
     function showPDPA(e) {
-         e.preventDefault(); 
-         // ... (ใช้ code PDPA เดิม) ...
-         Swal.fire({
-             title: 'PDPA Consent',
-             text: '...(ข้อความ PDPA)...',
-             confirmButtonColor: '#005C5C'
-         }).then((res) => {
-             if(res.isConfirmed) {
-                 document.getElementById('pdpaCheck').checked = true;
-                 toggleSubmitButton();
-             }
-         });
+        e.preventDefault(); 
+        Swal.fire({
+            title: '<strong style="color:#005C5C; font-family: Kanit; font-size: 1.2em;">นโยบายความเป็นส่วนตัวและข้อตกลง<br><span style="font-size:0.7em; font-weight:400; color:#666;">การขอความยินยอม (Consent)</span></strong>',
+            html: `
+                <div style="text-align: left; font-size: 0.9rem; line-height: 1.6; color: #4B5563; font-family: Kanit;">
+                    
+                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">1.</div>
+                        <div>
+                           บริษัทจะเก็บรวบรวม ใช้ และจัดเก็บข้อมูลส่วนบุคคลของท่าน ได้แก่ ชื่อ–นามสกุล ที่อยู่ หมายเลขโทรศัพท์ และอีเมล เพื่อใช้ในการสมัครบัตรสมาชิก การให้สิทธิประโยชน์ และการติดต่อสื่อสารที่เกี่ยวข้องกับการเป็นสมาชิก
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">2.</div>
+                        <div>
+                           ข้าพเจ้ายินยอมให้บริษัทติดต่อกลับผ่านทางโทรศัพท์ อีเมล หรือช่องทางอื่นที่ข้าพเจ้าให้ไว้ เพื่อแจ้งข้อมูล สิทธิประโยชน์ ข่าวสาร หรือกิจกรรมที่เกี่ยวข้องกับบัตรสมาชิก
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 12px; background-color: #f0fdfa; border: 1px dashed #005C5C; border-radius: 8px; font-size: 0.85rem;">
+                        <strong style="color:#005C5C;">หมายเหตุ:</strong> ท่านสามารถถอนความยินยอมได้ทุกเมื่อ โดยติดต่อบริษัทผ่านช่องทางที่กำหนด โดยจะไม่กระทบต่อสิทธิประโยชน์ที่ได้รับก่อนการถอนความยินยอม
+                    </div>
+
+                    <hr style="margin: 20px 0; border-top: 1px solid #eee;">
+                    <p style="text-align:center; font-size: 0.8rem; color: #888;">*การกด "ยอมรับ" หมายความว่าท่านได้อ่านและตกลงตามเงื่อนไขข้างต้นทั้งหมด</p>
+                </div>
+            `,
+            confirmButtonText: 'ยอมรับข้อตกลง',
+            confirmButtonColor: '#005C5C',
+            width: '600px',
+            scrollbarPadding: false,
+            showCloseButton: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const checkbox = document.getElementById('pdpaCheck');
+                checkbox.checked = true;
+                toggleSubmitButton();
+            }
+        });
     }
 
     function submitForm(e) {
@@ -132,10 +165,8 @@
       const form = document.getElementById('regForm');
       const phoneVal = form.phone.value.trim();
 
-      // --- Validation 1: ตรวจสอบเบอร์โทรศัพท์ ---
-      // ต้องเป็นตัวเลขล้วน (\d) และมีความยาว 10 ตัวเป๊ะ ({10})
+      // Validation เบอร์โทร
       const phoneRegex = /^\d{10}$/;
-      
       if (!phoneRegex.test(phoneVal)) {
         Swal.fire({
           icon: 'warning',
@@ -143,21 +174,21 @@
           text: 'กรุณากรอกเบอร์มือถือ 10 หลัก (ไม่ต้องใส่ขีด)',
           confirmButtonColor: '#005C5C'
         });
-        return; // หยุดทำงาน ไม่ส่งข้อมูล
+        return;
       }
-
-      // --- Validation 2: Line ID (ถ้าไม่ได้กรอก ก็ผ่านได้เลย เพราะไม่ required) ---
 
       const btn = document.getElementById('submitBtn');
       const originalText = btn.innerHTML;
-      btn.innerHTML = '<span class="animate-spin">⌛</span> กำลังบันทึก...';
+      
+      // Loading State
+      btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> กำลังบันทึก...';
       btn.disabled = true;
       btn.classList.add('opacity-70');
 
       const formData = {
         fullName: form.fullName.value,
-        phone: phoneVal,            // เพิ่ม phone
-        lineId: form.lineId.value,  // lineId อาจจะเป็นค่าว่าง "" ก็ได้
+        phone: phoneVal,
+        lineId: form.lineId.value,
         email: form.email.value,
         address: form.address.value
       };
@@ -171,8 +202,8 @@
       .then(() => {
         Swal.fire({
           icon: 'success',
-          title: 'เรียบร้อย!',
-          text: 'บันทึกข้อมูลสำเร็จ',
+          title: 'ลงทะเบียนสำเร็จ!',
+          text: 'ข้อมูลของท่านถูกบันทึกเรียบร้อยแล้ว',
           confirmButtonColor: '#005C5C'
         }).then(() => {
           form.reset();
