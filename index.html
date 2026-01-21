@@ -21,7 +21,7 @@
     /* UX: ป้องกันการซูมบนมือถือเวลาจิ้ม Input (เฉพาะ iOS) */
     input, textarea { font-size: 16px !important; }
 
-    /* Custom Scrollbar ให้ดูสะอาดตา */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #f1f1f1; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -29,7 +29,7 @@
 
     .brand-color { color: #005C5C; }
     
-    /* Checkbox Styles: ปรับแต่ง Checkbox ให้เข้ากับธีม */
+    /* Checkbox Styles */
     .checkbox-wrapper input:checked + div { background-color: #005C5C; border-color: #005C5C; }
     .checkbox-wrapper input:checked + div svg { display: block; }
     
@@ -38,30 +38,28 @@
     .btn-active { 
         background-color: #005C5C; 
         cursor: pointer; 
-        box-shadow: 0 4px 14px 0 rgba(0, 92, 92, 0.39); /* เพิ่มเงาให้ปุ่มดูมีมิติ */
+        box-shadow: 0 4px 14px 0 rgba(0, 92, 92, 0.39); 
     }
     .btn-active:hover { background-color: #004545; transform: translateY(-1px); }
     .btn-active:active { transform: scale(0.98); }
 
-    /* Glassmorphism Card: ปรับ Shadow และ Border ให้ดูพรีเมียมขึ้น */
+    /* Glassmorphism Card */
     .glass-card { 
         background: rgba(255, 255, 255, 0.90); 
-        backdrop-filter: blur(12px); /* เบลอฉากหลังเพื่อให้ตัวหนังสือชัด */
+        backdrop-filter: blur(12px); 
         -webkit-backdrop-filter: blur(12px);
         box-shadow: 0 20px 40px -10px rgba(0, 92, 92, 0.15); 
         border-radius: 24px; 
         border: 1px solid rgba(255, 255, 255, 0.6); 
     }
 
-    /* Pattern Background: สร้างพื้นหลังให้มีลวดลาย เพื่อให้ Glass Effect ทำงานได้สวย */
+    /* Pattern Background */
     .bg-pattern {
         background-color: #FDFBF7;
         background-image: radial-gradient(#005C5C 0.5px, transparent 0.5px), radial-gradient(#005C5C 0.5px, #FDFBF7 0.5px);
         background-size: 20px 20px;
         background-position: 0 0, 10px 10px;
-        opacity: 1;
     }
-    /* สร้าง Overlay สีจางๆ ทับ Pattern เพื่อไม่ให้ลายตาเกินไป */
     .bg-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: linear-gradient(135deg, rgba(253, 251, 247, 0.9) 0%, rgba(230, 245, 245, 0.8) 100%);
@@ -144,8 +142,8 @@
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwkwc-eu5UKXwKkm7TslEv0U11IKAyNK_pktxTw8dbA3aeJfdW6M6FWvq5J5ej9xUy/exec';
 
     /**
-     * ฟังก์ชันควบคุมสถานะปุ่ม Submit
-     * จะเปิดใช้งานก็ต่อเมื่อติ๊กถูกยอมรับ PDPA แล้วเท่านั้น
+     * ฟังก์ชัน: toggleSubmitButton
+     * รายละเอียด: ควบคุมสถานะปุ่ม Submit จะเปิดใช้งานก็ต่อเมื่อติ๊กถูกยอมรับ PDPA
      */
     function toggleSubmitButton() {
         const checkbox = document.getElementById('pdpaCheck');
@@ -163,8 +161,8 @@
     }
 
     /**
-     * ฟังก์ชันแสดง Popup PDPA
-     * ใช้ SweetAlert2 เพื่อความสวยงามและ Responsive
+     * ฟังก์ชัน: showPDPA
+     * รายละเอียด: แสดง Popup PDPA พร้อมข้อความใหม่ 3 ข้อตามที่ระบุ
      */
     function showPDPA(e) {
         e.preventDefault(); 
@@ -172,27 +170,36 @@
             title: '<strong style="color:#005C5C; font-family: Kanit; font-size: 1.2em;">นโยบายความเป็นส่วนตัวและข้อตกลง</strong>',
             html: `
                 <div style="text-align: left; font-size: 0.9rem; line-height: 1.6; color: #4B5563; font-family: Kanit;">
-                    <p style="margin-bottom:10px; font-size:0.85rem; color:#6b7280;">โปรดอ่านข้อกำหนดการใช้ข้อมูลส่วนบุคคล</p>
                     
                     <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <div style="min-width: 24px; color: #005C5C; font-weight: bold;">1.</div>
-                        <div>บริษัทจะจัดเก็บ ชื่อ-ที่อยู่-เบอร์โทร เพื่อใช้ในการสมัครและมอบสิทธิประโยชน์</div>
+                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">1.</div>
+                        <div>
+                           บริษัทจะเก็บรวบรวม ใช้ และจัดเก็บข้อมูลส่วนบุคคลของท่าน ได้แก่ ชื่อ–นามสกุล ที่อยู่ หมายเลขโทรศัพท์ และอีเมล เพื่อใช้ในการสมัครบัตรสมาชิก การให้สิทธิประโยชน์ และการติดต่อสื่อสารที่เกี่ยวข้องกับการเป็นสมาชิก
+                        </div>
                     </div>
 
                     <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <div style="min-width: 24px; color: #005C5C; font-weight: bold;">2.</div>
-                        <div>ยินยอมให้ติดต่อกลับเพื่อแจ้งข่าวสารโปรโมชั่น (ไม่ส่ง Spam รบกวน)</div>
+                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">2.</div>
+                        <div>
+                           ข้าพเจ้ายินยอมให้บริษัทติดต่อกลับผ่านทางโทรศัพท์ อีเมล หรือช่องทางอื่นที่ข้าพเจ้าให้ไว้ เพื่อแจ้งข้อมูล สิทธิประโยชน์ ข่าวสาร หรือกิจกรรมที่เกี่ยวข้องกับบัตรสมาชิก
+                        </div>
                     </div>
 
-                    <div style="margin-top: 15px; padding: 10px; background-color: #f0fdfa; border-radius: 8px; font-size: 0.8rem; color:#005C5C;">
-                        ท่านสามารถยกเลิกความยินยอมได้ตลอดเวลาโดยติดต่อทางร้าน
+                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">3.</div>
+                        <div>
+                           ท่านสามารถถอนความยินยอมได้ทุกเมื่อ โดยติดต่อบริษัทผ่านช่องทางที่กำหนด โดยจะไม่กระทบต่อสิทธิประโยชน์ที่ได้รับก่อนการถอนความยินยอม
+                        </div>
                     </div>
+
+                    <hr style="margin: 20px 0; border-top: 1px solid #eee;">
+                    <p style="text-align:center; font-size: 0.8rem; color: #888;">*การกด "ยอมรับ" หมายความว่าท่านได้อ่านและตกลงตามเงื่อนไขข้างต้นทั้งหมด</p>
                 </div>
             `,
-            confirmButtonText: 'ยอมรับเงื่อนไข',
+            confirmButtonText: 'ยอมรับข้อตกลง',
             confirmButtonColor: '#005C5C',
-            width: '90%', // Responsive width
-            maxWidth: '500px',
+            width: '90%', 
+            maxWidth: '600px',
             borderRadius: '16px',
             showCloseButton: true
         }).then((result) => {
@@ -205,8 +212,8 @@
     }
 
     /**
-     * ฟังก์ชันส่งข้อมูล
-     * มีการ Validate เบอร์โทร และแสดง Loading State
+     * ฟังก์ชัน: submitForm
+     * รายละเอียด: ส่งข้อมูลไปยัง Google Script, Validate เบอร์โทร และแสดง Loading
      */
     function submitForm(e) {
       e.preventDefault();
@@ -214,7 +221,7 @@
       const form = document.getElementById('regForm');
       const phoneVal = form.phone.value.trim();
 
-      // Validation: ตรวจสอบเบอร์โทร 10 หลัก (Regex)
+      // Validation
       const phoneRegex = /^\d{10}$/;
       if (!phoneRegex.test(phoneVal)) {
         Swal.fire({
@@ -227,7 +234,7 @@
         return;
       }
 
-      // UI: เปลี่ยนปุ่มเป็นสถานะ Loading
+      // UI Loading
       const btn = document.getElementById('submitBtn');
       const originalText = btn.innerHTML;
       
@@ -249,19 +256,18 @@
         address: form.address.value
       };
 
-      // API Call: ส่งข้อมูลไปยัง Google Script
+      // API Request
       fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', // no-cors สำหรับ Google Apps Script
+        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(formData)
       })
       .then(() => {
-        // Success: แสดง Popup สำเร็จ
         Swal.fire({
           icon: 'success',
           title: 'ลงทะเบียนสำเร็จ!',
-          text: 'ยินดีต้อนรับสู่ครอบครัว Spaghetti Factory',
+          text: 'ข้อมูลของท่านถูกบันทึกเรียบร้อยแล้ว',
           confirmButtonColor: '#005C5C',
           confirmButtonText: 'ตกลง'
         }).then(() => {
@@ -272,7 +278,6 @@
         });
       })
       .catch(error => {
-        // Error: แจ้งเตือนเมื่อระบบมีปัญหา
         console.error('Error:', error);
         Swal.fire({ 
             icon: 'error', 
