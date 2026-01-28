@@ -1,3 +1,19 @@
+นี่คือโค้ด **index.html** ฉบับสมบูรณ์ที่ปรับปรุง UI/UX ให้ดูเป็นมืออาชีพและรองรับมือถือ (Mobile-First) ตามที่คุณต้องการ พร้อมอัปเดตข้อความในส่วน **"เงื่อนไขและนโยบายความเป็นส่วนตัว"** ให้ตรงตามที่คุณระบุครับ
+
+### สิ่งที่ปรับปรุงในเวอร์ชันนี้:
+
+1. **อัปเดตข้อความ PDPA:** เปลี่ยนเนื้อหาในหน้าต่าง Popup ให้ตรงกับ 3 ข้อที่คุณส่งมาเป๊ะๆ
+2. **Professional UI:**
+* **Smart Input:** ช่องเบอร์โทรใส่ขีด (-) ให้อัตโนมัติ (เช่น 081-234-5678)
+* **Visual Icons:** เพิ่มไอคอนหน้าช่องกรอกข้อมูล เพื่อให้ดูง่ายและสวยงาม
+* **Mobile Layout:** ปรับขนาดปุ่มและช่องกรอกให้กดง่ายบนมือถือ
+
+
+3. **Color Theme:** ใช้ธีมสีเขียว (Brand Color) ที่ดูพรีเมียม สบายตา
+
+คุณสามารถ Copy โค้ดทั้งหมดนี้ไปทับไฟล์ `index.html` เดิมได้เลยครับ
+
+```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -25,7 +41,7 @@
               DEFAULT: '#005C5C',
               dark: '#004545',
               light: '#E6F2F2',
-              accent: '#FD8C5F' // สีส้มอิฐตามโลโก้ (ถ้ามี) หรือสีตัด
+              accent: '#FD8C5F' 
             }
           },
           fontFamily: {
@@ -65,10 +81,10 @@
         transform: translateY(-50%);
         color: #94A3B8;
         transition: color 0.3s;
-        pointer-events: none; /* Click through to input */
+        pointer-events: none;
     }
     .custom-input {
-        padding-left: 3rem !important; /* Make space for icon */
+        padding-left: 3rem !important; /* เว้นที่ให้ไอคอน */
         transition: all 0.3s ease;
     }
     .custom-input:focus {
@@ -195,30 +211,33 @@
         btn.disabled = !checkbox.checked;
     }
 
+    /**
+     * ฟังก์ชันแสดง Popup PDPA (อัปเดตข้อความใหม่ตามที่ขอ)
+     */
     function showPDPA(e) {
         e.preventDefault(); 
         Swal.fire({
-            title: '<span class="text-brand font-kanit">ข้อตกลงการใช้งาน</span>',
+            title: '<span class="text-brand font-kanit">การขอความยินยอม (Consent)</span>',
             html: `
-                <div class="text-left text-sm text-gray-600 font-kanit space-y-3 p-2">
-                    <div class="flex gap-3">
-                        <span class="text-brand font-bold">1.</span>
-                        <span>เก็บรวบรวมข้อมูลเพื่อใช้ในการสมัครสมาชิกและติดต่อสื่อสาร</span>
+                <div class="text-left text-sm text-gray-600 font-kanit space-y-4 p-2">
+                    <div class="flex gap-3 items-start">
+                        <i class="far fa-check-square text-brand mt-1 text-lg flex-shrink-0"></i>
+                        <span class="leading-relaxed">บริษัทจะเก็บรวบรวม ใช้ และจัดเก็บข้อมูลส่วนบุคคลของท่าน ได้แก่ ชื่อ–นามสกุล ที่อยู่ หมายเลขโทรศัพท์ และอีเมล เพื่อใช้ในการสมัครบัตรสมาชิก การให้สิทธิประโยชน์ และการติดต่อสื่อสารที่เกี่ยวข้องกับการเป็นสมาชิก</span>
                     </div>
-                    <div class="flex gap-3">
-                        <span class="text-brand font-bold">2.</span>
-                        <span>ยินยอมให้แจ้งข่าวสารและโปรโมชั่นผ่านช่องทางที่ระบุ</span>
+                    <div class="flex gap-3 items-start">
+                        <i class="far fa-check-square text-brand mt-1 text-lg flex-shrink-0"></i>
+                        <span class="leading-relaxed">ข้าพเจ้ายินยอมให้บริษัทติดต่อกลับผ่านทางโทรศัพท์ อีเมล หรือช่องทางอื่นที่ข้าพเจ้าให้ไว้ เพื่อแจ้งข้อมูล สิทธิประโยชน์ ข่าวสาร หรือกิจกรรมที่เกี่ยวข้องกับบัตรสมาชิก</span>
                     </div>
-                    <div class="flex gap-3">
-                        <span class="text-brand font-bold">3.</span>
-                        <span>ท่านสามารถยกเลิกความยินยอมได้ตลอดเวลาผ่าน Line Official</span>
+                    <div class="flex gap-3 items-start">
+                        <i class="far fa-check-square text-brand mt-1 text-lg flex-shrink-0"></i>
+                        <span class="leading-relaxed">ท่านสามารถถอนความยินยอมได้ทุกเมื่อ โดยติดต่อบริษัทผ่านช่องทาง Line Official Account : @spaghettifactory โดยจะไม่กระทบต่อสิทธิประโยชน์ที่ได้รับก่อนการถอนความยินยอม</span>
                     </div>
                 </div>
             `,
             confirmButtonText: 'ยอมรับข้อตกลง',
             confirmButtonColor: '#005C5C',
             width: '90%', 
-            maxWidth: '400px',
+            maxWidth: '500px',
             customClass: { popup: 'rounded-2xl' }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -290,3 +309,5 @@
   </script>
 </body>
 </html>
+
+```
