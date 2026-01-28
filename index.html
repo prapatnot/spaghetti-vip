@@ -5,258 +5,261 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
   <meta property="og:title" content="สมัครสมาชิก VIP - Spaghetti Factory">
-  <meta property="og:description" content="ลงทะเบียนวันนี้ รับสิทธิพิเศษและส่วนลดมากมายเฉพาะสมาชิก VIP เท่านั้น!">
+  <meta property="og:description" content="ลงทะเบียนรับสิทธิพิเศษและส่วนลดมากมายเฉพาะสมาชิก VIP">
   <meta property="og:image" content="logo.png">
   
   <title>Spaghetti Factory VIP Register</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#005C5C',
+              dark: '#004545',
+              light: '#E6F2F2',
+              accent: '#FD8C5F' // สีส้มอิฐตามโลโก้ (ถ้ามี) หรือสีตัด
+            }
+          },
+          fontFamily: {
+            sans: ['Kanit', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    /* ตั้งค่า Font หลัก และสีพื้นหลัง */
-    body { font-family: 'Kanit', sans-serif; }
+    /* UX Tweaks */
+    body { 
+        background-color: #F8FAFC;
+        background-image: radial-gradient(#005C5C 0.8px, transparent 0.8px);
+        background-size: 24px 24px;
+    }
     
-    /* UX: ป้องกันการซูมบนมือถือเวลาจิ้ม Input (เฉพาะ iOS) */
-    input, textarea { font-size: 16px !important; }
+    /* Disable Zoom on iOS Inputs */
+    input, textarea, select { font-size: 16px !important; }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f1f1; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    .brand-color { color: #005C5C; }
-    
-    /* Checkbox Styles */
-    .checkbox-wrapper input:checked + div { background-color: #005C5C; border-color: #005C5C; }
-    .checkbox-wrapper input:checked + div svg { display: block; }
-    
-    /* Button States */
-    .btn-disabled { background-color: #CBD5E1; cursor: not-allowed; transform: none !important; }
-    .btn-active { 
-        background-color: #005C5C; 
-        cursor: pointer; 
-        box-shadow: 0 4px 14px 0 rgba(0, 92, 92, 0.39); 
-    }
-    .btn-active:hover { background-color: #004545; transform: translateY(-1px); }
-    .btn-active:active { transform: scale(0.98); }
-
-    /* Glassmorphism Card */
-    .glass-card { 
-        background: rgba(255, 255, 255, 0.90); 
-        backdrop-filter: blur(12px); 
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 20px 40px -10px rgba(0, 92, 92, 0.15); 
-        border-radius: 24px; 
-        border: 1px solid rgba(255, 255, 255, 0.6); 
+    /* Glass Effect */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 25px 50px -12px rgba(0, 92, 92, 0.15);
     }
 
-    /* Pattern Background */
-    .bg-pattern {
-        background-color: #FDFBF7;
-        background-image: radial-gradient(#005C5C 0.5px, transparent 0.5px), radial-gradient(#005C5C 0.5px, #FDFBF7 0.5px);
-        background-size: 20px 20px;
-        background-position: 0 0, 10px 10px;
+    /* Input Styling */
+    .input-group { position: relative; }
+    .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94A3B8;
+        transition: color 0.3s;
+        pointer-events: none; /* Click through to input */
     }
-    .bg-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(135deg, rgba(253, 251, 247, 0.9) 0%, rgba(230, 245, 245, 0.8) 100%);
-        z-index: -1;
+    .custom-input {
+        padding-left: 3rem !important; /* Make space for icon */
+        transition: all 0.3s ease;
     }
+    .custom-input:focus {
+        border-color: #005C5C;
+        box-shadow: 0 0 0 4px rgba(0, 92, 92, 0.1);
+    }
+    .input-group:focus-within .input-icon { color: #005C5C; }
+
+    /* Animation */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-enter { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 bg-pattern relative">
-  <div class="bg-overlay"></div>
+<body class="min-h-screen flex items-center justify-center p-4">
 
-  <div class="glass-card w-full max-w-md overflow-hidden relative animate-[fadeIn_0.5s_ease-out]">
+  <div class="glass-card w-full max-w-[420px] rounded-3xl overflow-hidden animate-enter relative">
     
-    <div class="pt-8 pb-4 px-8 text-center relative z-10">
-      <img src="logo.png" alt="Spaghetti Factory" class="h-20 mx-auto mb-4 object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-      <h2 class="text-2xl font-bold brand-color tracking-tight">VIP Registration</h2>
-      <p class="text-gray-500 text-sm mt-1 font-light">กรอกข้อมูลเพื่อรับสิทธิพิเศษสมาชิก</p>
+    <div class="h-2 w-full bg-gradient-to-r from-brand to-teal-400"></div>
+
+    <div class="pt-8 pb-2 px-8 text-center">
+      <div class="relative w-24 h-24 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center border border-gray-100 p-2">
+        <img src="logo.png" alt="Spaghetti Factory" class="w-full h-full object-contain">
+      </div>
+      <h2 class="text-2xl font-bold text-brand tracking-tight">VIP Registration</h2>
+      <p class="text-gray-500 text-sm mt-1">กรอกข้อมูลเพื่อรับสิทธิพิเศษ</p>
     </div>
 
-    <div class="px-8 pb-8">
-      <form id="regForm" onsubmit="submitForm(event)" class="space-y-4">
+    <div class="px-6 pb-8 pt-4">
+      <form id="regForm" onsubmit="submitForm(event)" class="space-y-5">
         
         <div>
-          <label class="text-xs font-semibold text-gray-500 uppercase ml-1 tracking-wider">Full Name *</label>
-          <input type="text" name="fullName" required placeholder="ชื่อ-นามสกุล" autocomplete="name"
-                 class="w-full mt-1 px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-gray-700 text-base focus:bg-white focus:ring-2 focus:ring-[#005C5C] focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400">
+          <label class="block text-xs font-semibold text-gray-500 mb-1.5 ml-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+          <div class="input-group">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" name="fullName" required placeholder="ระบุชื่อจริงและนามสกุล" autocomplete="name"
+                   class="custom-input w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 outline-none placeholder-gray-400">
+          </div>
         </div>
 
         <div>
-            <label class="text-xs font-semibold text-gray-500 uppercase ml-1 tracking-wider">Phone Number *</label>
-            <input type="tel" name="phone" required maxlength="10" placeholder="08xxxxxxxx" inputmode="numeric" autocomplete="tel"
-                   class="w-full mt-1 px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-gray-700 text-base focus:bg-white focus:ring-2 focus:ring-[#005C5C] focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400">
+            <label class="block text-xs font-semibold text-gray-500 mb-1.5 ml-1">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+            <div class="input-group">
+              <i class="fas fa-mobile-alt input-icon"></i>
+              <input type="tel" name="phone" id="phoneInput" required maxlength="12" placeholder="0xx-xxx-xxxx" inputmode="numeric" autocomplete="tel"
+                     class="custom-input w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 outline-none placeholder-gray-400">
+            </div>
         </div>
 
         <div>
-            <label class="text-xs font-semibold text-gray-500 uppercase ml-1 tracking-wider">Line ID <span class="text-gray-400 font-normal normal-case">(ไม่บังคับ)</span></label>
-            <input type="text" name="lineId" placeholder="เช่น @myspaghetti"
-                   class="w-full mt-1 px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-gray-700 text-base focus:bg-white focus:ring-2 focus:ring-[#005C5C] focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400">
+            <label class="block text-xs font-semibold text-gray-500 mb-1.5 ml-1">Line ID <span class="text-gray-300 font-light">(ไม่บังคับ)</span></label>
+            <div class="input-group">
+              <i class="fab fa-line input-icon"></i>
+              <input type="text" name="lineId" placeholder="@yourlineid"
+                     class="custom-input w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 outline-none placeholder-gray-400">
+            </div>
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-gray-500 uppercase ml-1 tracking-wider">Email *</label>
-          <input type="email" name="email" required placeholder="name@email.com" inputmode="email" autocomplete="email"
-                 class="w-full mt-1 px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-gray-700 text-base focus:bg-white focus:ring-2 focus:ring-[#005C5C] focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400">
+          <label class="block text-xs font-semibold text-gray-500 mb-1.5 ml-1">อีเมล <span class="text-red-500">*</span></label>
+          <div class="input-group">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" name="email" required placeholder="name@example.com" inputmode="email" autocomplete="email"
+                   class="custom-input w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 outline-none placeholder-gray-400">
+          </div>
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-gray-500 uppercase ml-1 tracking-wider">Address *</label>
-          <textarea name="address" required rows="3" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด, รหัสไปรษณีย์" autocomplete="street-address"
-                    class="w-full mt-1 px-4 py-3 bg-white/50 border border-gray-200 rounded-xl text-gray-700 text-base focus:bg-white focus:ring-2 focus:ring-[#005C5C] focus:border-transparent outline-none resize-none transition-all duration-200 placeholder-gray-400"></textarea>
+          <label class="block text-xs font-semibold text-gray-500 mb-1.5 ml-1">ที่อยู่จัดส่ง <span class="text-red-500">*</span></label>
+          <div class="input-group">
+            <i class="fas fa-map-marker-alt input-icon top-4 transform-none"></i>
+            <textarea name="address" required rows="2" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล..." autocomplete="street-address"
+                      class="custom-input w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 outline-none resize-none placeholder-gray-400 min-h-[80px]"></textarea>
+          </div>
         </div>
 
         <div class="pt-2">
-            <label class="checkbox-wrapper flex items-start cursor-pointer group">
-              <input type="checkbox" id="pdpaCheck" class="hidden" onchange="toggleSubmitButton()">
-              <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center mt-0.5 mr-3 transition-all duration-200 bg-white group-hover:border-[#005C5C] flex-shrink-0 shadow-sm">
-                <svg class="w-3 h-3 text-white hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            <label class="flex items-start cursor-pointer group select-none">
+              <div class="relative flex items-center">
+                <input type="checkbox" id="pdpaCheck" class="peer sr-only" onchange="toggleSubmitButton()">
+                <div class="w-5 h-5 border-2 border-gray-300 rounded peer-checked:bg-brand peer-checked:border-brand transition-all duration-200"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity">
+                    <i class="fas fa-check text-xs"></i>
+                </div>
               </div>
-              <div class="text-sm text-gray-500 select-none leading-tight pt-0.5">
-                ข้าพเจ้าได้อ่านและยอมรับ <a href="#" onclick="showPDPA(event)" class="text-[#005C5C] font-semibold underline decoration-dotted hover:text-[#004545]">นโยบายความเป็นส่วนตัวและข้อตกลง</a>
+              <div class="ml-3 text-sm text-gray-500 leading-tight">
+                ฉันยอมรับ <a href="#" onclick="showPDPA(event)" class="text-brand font-semibold underline decoration-dotted hover:text-teal-700">เงื่อนไขและนโยบายความเป็นส่วนตัว</a>
               </div>
             </label>
         </div>
 
         <div class="pt-2">
           <button type="submit" id="submitBtn" disabled 
-                  class="w-full btn-disabled text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2 text-base tracking-wide">
+                  class="w-full bg-gray-300 text-white font-bold py-4 rounded-xl shadow-none transition-all duration-300 transform scale-100 flex justify-center items-center gap-2
+                         disabled:opacity-70 disabled:cursor-not-allowed
+                         enabled:bg-gradient-to-r enabled:from-brand enabled:to-teal-600 enabled:shadow-lg enabled:shadow-teal-900/20 enabled:active:scale-[0.98]">
             <span>ยืนยันการลงทะเบียน</span>
+            <i class="fas fa-arrow-right text-sm"></i>
           </button>
         </div>
       </form>
     </div>
     
-    <div class="bg-gray-50/50 py-3 text-center border-t border-gray-100 backdrop-blur-sm">
-      <p class="text-[10px] text-gray-400 font-light tracking-wider">© SPAGHETTI FACTORY VIP MEMBER</p>
+    <div class="bg-gray-50 py-4 text-center border-t border-gray-100">
+      <p class="text-[10px] text-gray-400 font-light tracking-wider uppercase">© Spaghetti Factory VIP Member</p>
     </div>
   </div>
 
   <script>
-    // *** Config URL Script ***
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwkwc-eu5UKXwKkm7TslEv0U11IKAyNK_pktxTw8dbA3aeJfdW6M6FWvq5J5ej9xUy/exec';
 
-    /**
-     * ฟังก์ชัน: toggleSubmitButton
-     * รายละเอียด: ควบคุมสถานะปุ่ม Submit จะเปิดใช้งานก็ต่อเมื่อติ๊กถูกยอมรับ PDPA
-     */
+    // --- Phone Formatter Logic ---
+    const phoneInput = document.getElementById('phoneInput');
+    phoneInput.addEventListener('input', function (e) {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+
     function toggleSubmitButton() {
         const checkbox = document.getElementById('pdpaCheck');
         const btn = document.getElementById('submitBtn');
-        
-        if (checkbox.checked) {
-            btn.disabled = false;
-            btn.classList.remove('btn-disabled');
-            btn.classList.add('btn-active');
-        } else {
-            btn.disabled = true;
-            btn.classList.add('btn-disabled');
-            btn.classList.remove('btn-active');
-        }
+        btn.disabled = !checkbox.checked;
     }
 
-    /**
-     * ฟังก์ชัน: showPDPA
-     * รายละเอียด: แสดง Popup PDPA พร้อมข้อความใหม่ 3 ข้อตามที่ระบุ
-     */
     function showPDPA(e) {
         e.preventDefault(); 
         Swal.fire({
-            title: '<strong style="color:#005C5C; font-family: Kanit; font-size: 1.2em;">นโยบายความเป็นส่วนตัวและข้อตกลง</strong>',
+            title: '<span class="text-brand font-kanit">ข้อตกลงการใช้งาน</span>',
             html: `
-                <div style="text-align: left; font-size: 0.9rem; line-height: 1.6; color: #4B5563; font-family: Kanit;">
-                    
-                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">1.</div>
-                        <div>
-                           บริษัทจะเก็บรวบรวม ใช้ และจัดเก็บข้อมูลส่วนบุคคลของท่าน ได้แก่ ชื่อ–นามสกุล ที่อยู่ หมายเลขโทรศัพท์ และอีเมล เพื่อใช้ในการสมัครบัตรสมาชิก การให้สิทธิประโยชน์ และการติดต่อสื่อสารที่เกี่ยวข้องกับการเป็นสมาชิก
-                        </div>
+                <div class="text-left text-sm text-gray-600 font-kanit space-y-3 p-2">
+                    <div class="flex gap-3">
+                        <span class="text-brand font-bold">1.</span>
+                        <span>เก็บรวบรวมข้อมูลเพื่อใช้ในการสมัครสมาชิกและติดต่อสื่อสาร</span>
                     </div>
-
-                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">2.</div>
-                        <div>
-                           ข้าพเจ้ายินยอมให้บริษัทติดต่อกลับผ่านทางโทรศัพท์ อีเมล หรือช่องทางอื่นที่ข้าพเจ้าให้ไว้ เพื่อแจ้งข้อมูล สิทธิประโยชน์ ข่าวสาร หรือกิจกรรมที่เกี่ยวข้องกับบัตรสมาชิก
-                        </div>
+                    <div class="flex gap-3">
+                        <span class="text-brand font-bold">2.</span>
+                        <span>ยินยอมให้แจ้งข่าวสารและโปรโมชั่นผ่านช่องทางที่ระบุ</span>
                     </div>
-
-                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <div style="min-width: 20px; color: #005C5C; font-weight: bold;">3.</div>
-                        <div>
-                           ท่านสามารถถอนความยินยอมได้ทุกเมื่อ โดยติดต่อบริษัทผ่าน Line Official Account : @spaghettifactory โดยจะไม่กระทบต่อสิทธิประโยชน์ที่ได้รับก่อนการถอนความยินยอม
-                        </div>
+                    <div class="flex gap-3">
+                        <span class="text-brand font-bold">3.</span>
+                        <span>ท่านสามารถยกเลิกความยินยอมได้ตลอดเวลาผ่าน Line Official</span>
                     </div>
-
-                    <hr style="margin: 20px 0; border-top: 1px solid #eee;">
-                    <p style="text-align:center; font-size: 0.8rem; color: #888;">*การกด "ยอมรับ" หมายความว่าท่านได้อ่านและตกลงตามเงื่อนไขข้างต้นทั้งหมด</p>
                 </div>
             `,
             confirmButtonText: 'ยอมรับข้อตกลง',
             confirmButtonColor: '#005C5C',
             width: '90%', 
-            maxWidth: '600px',
-            borderRadius: '16px',
-            showCloseButton: true
+            maxWidth: '400px',
+            customClass: { popup: 'rounded-2xl' }
         }).then((result) => {
             if (result.isConfirmed) {
-                const checkbox = document.getElementById('pdpaCheck');
-                checkbox.checked = true;
+                document.getElementById('pdpaCheck').checked = true;
                 toggleSubmitButton();
             }
         });
     }
 
-    /**
-     * ฟังก์ชัน: submitForm
-     * รายละเอียด: ส่งข้อมูลไปยัง Google Script, Validate เบอร์โทร และแสดง Loading
-     */
     function submitForm(e) {
       e.preventDefault();
       
       const form = document.getElementById('regForm');
-      const phoneVal = form.phone.value.trim();
+      // ลบขีดออกจากเบอร์โทรเพื่อส่งเฉพาะตัวเลข
+      const rawPhone = form.phone.value.replace(/-/g, '');
 
-      // Validation
-      const phoneRegex = /^\d{10}$/;
-      if (!phoneRegex.test(phoneVal)) {
+      if (rawPhone.length !== 10) {
         Swal.fire({
           icon: 'warning',
-          title: 'เบอร์โทรศัพท์ไม่ถูกต้อง',
-          text: 'กรุณากรอกเบอร์มือถือ 10 หลัก โดยไม่ต้องใส่ขีด (-)',
-          confirmButtonColor: '#005C5C',
-          confirmButtonText: 'แก้ไขข้อมูล'
+          title: 'เบอร์โทรศัพท์ไม่ครบถ้วน',
+          text: 'กรุณากรอกเบอร์มือถือ 10 หลัก',
+          confirmButtonColor: '#005C5C'
         });
         return;
       }
 
-      // UI Loading
       const btn = document.getElementById('submitBtn');
-      const originalText = btn.innerHTML;
+      const originalContent = btn.innerHTML;
       
-      btn.innerHTML = `
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        กำลังบันทึกข้อมูล...
-      `;
+      // Loading State
+      btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> กำลังบันทึก...`;
       btn.disabled = true;
-      btn.classList.add('opacity-80', 'cursor-wait');
 
       const formData = {
         fullName: form.fullName.value,
-        phone: phoneVal,
+        phone: rawPhone, // ส่งแบบไม่มีขีด
         lineId: form.lineId.value,
         email: form.email.value,
         address: form.address.value
       };
 
-      // API Request
       fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -267,31 +270,23 @@
         Swal.fire({
           icon: 'success',
           title: 'ลงทะเบียนสำเร็จ!',
-          text: 'ข้อมูลของท่านถูกบันทึกเรียบร้อยแล้ว',
+          text: 'ยินดีต้อนรับสู่ครอบครัว Spaghetti Factory',
           confirmButtonColor: '#005C5C',
-          confirmButtonText: 'ตกลง'
+          timer: 3000,
+          timerProgressBar: true
         }).then(() => {
           form.reset();
-          btn.innerHTML = originalText;
-          btn.classList.remove('opacity-80', 'cursor-wait');
+          btn.innerHTML = originalContent;
           toggleSubmitButton(); 
         });
       })
       .catch(error => {
         console.error('Error:', error);
-        Swal.fire({ 
-            icon: 'error', 
-            title: 'เกิดข้อผิดพลาด', 
-            text: 'ไม่สามารถเชื่อมต่อระบบได้ โปรดลองใหม่อีกครั้ง',
-            confirmButtonColor: '#d33' 
-        });
-        btn.innerHTML = originalText;
-        btn.classList.remove('opacity-80', 'cursor-wait');
-        toggleSubmitButton();
+        Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: 'กรุณาลองใหม่', confirmButtonColor: '#d33' });
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
       });
     }
   </script>
 </body>
-
 </html>
-
